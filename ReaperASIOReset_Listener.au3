@@ -2,7 +2,6 @@
 
 Opt("TrayIconHide", 1)
 
-
 Func OnAutoItExit()
     TCPShutdown()
 EndFunc
@@ -11,7 +10,14 @@ OnAutoItExitRegister("OnAutoItExit")
 
 
 
-Local $hWnd = WinGetHandle("[CLASS:REAPERwnd]")
+
+
+; wait till reaper is up
+Local $hWnd = 0;
+Do
+   Sleep (500)
+   $hWnd = WinGetHandle("[CLASS:REAPERwnd]")
+Until $hWnd<>0
 
 ; This is what does the actual audio reset in reaper, send this to correct HWND and it resets
 ;_WinAPI_PostMessage($hWnd, 0x13D2, 0xAD001515, 0 )
